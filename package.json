@@ -8,6 +8,7 @@
     "dev": "node esbuild.config.mjs",
     "build": "tsc --noEmit && node esbuild.config.mjs production",
     "test": "node scripts/run-tests.mjs && node scripts/check-session-race.mjs",
+    "dev:install": "npm run build && node scripts/install-dev.mjs",
     "perf:baseline": "node scripts/run-tests.mjs performance",
     "release:check": "node scripts/check-release.mjs",
     "release:package": "node scripts/package-release.mjs",
