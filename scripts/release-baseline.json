@@ -1,0 +1,8 @@
+{
+  "pencilInputBlock": {
+    "startMarker": "  onCanvasPointerDown(event) {",
+    "endMarker": "  touchPoint(touch) {",
+    "sha256": "2D6203BF1484DBF7D47B1A8CC84E887F89C639C7ECA5A8286EA4352F951CB7B0",
+    "verifiedSince": "0.4.31"
+  }
+}

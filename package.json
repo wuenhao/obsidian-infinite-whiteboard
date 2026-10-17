@@ -1,0 +1,31 @@
+{
+  "name": "obsidian-infinite-board",
+  "version": "0.4.82",
+  "private": true,
+  "description": "An Apple Pencil-first infinite whiteboard for Obsidian.",
+  "main": "main.js",
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "tsc --noEmit && node esbuild.config.mjs production",
+    "test": "node scripts/run-tests.mjs && node scripts/check-session-race.mjs",
+    "perf:baseline": "node scripts/run-tests.mjs performance",
+    "release:check": "node scripts/check-release.mjs",
+    "release:package": "node scripts/package-release.mjs",
+    "release:install": "node scripts/install-release.mjs",
+    "check": "npm run test && npm run build && npm run release:check"
+  },
+  "keywords": [
+    "obsidian",
+    "whiteboard",
+    "apple-pencil",
+    "infinite-canvas"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "builtin-modules": "^5.0.0",
+    "esbuild": "^0.25.0",
+    "obsidian": "latest",
+    "typescript": "^5.8.0"
+  }
+}
