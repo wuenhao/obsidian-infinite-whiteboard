@@ -2033,8 +2033,8 @@ var InputFlightRecorder = class {
 };
 
 // src/platform/runtime-integrity.ts
-var RUNTIME_VERSION = "0.4.82";
-var BUILD_FINGERPRINT = "0.4.82-community-release-r1";
+var RUNTIME_VERSION = "0.4.83";
+var BUILD_FINGERPRINT = "0.4.83-community-release-r1";
 function runtimeMatchesManifest(manifestVersion) {
   return manifestVersion === RUNTIME_VERSION;
 }
@@ -3900,12 +3900,36 @@ var InfiniteBoardView = class extends import_obsidian3.FileView {
     });
     const document2 = frame.contentDocument;
     if (!document2) throw new Error("iPad input document is unavailable");
-    document2.documentElement.style.cssText = "width:100%;height:100%;margin:0;overflow:hidden;background:#f7f7f5;-webkit-touch-callout:none";
-    document2.body.style.cssText = "width:100%;height:100%;margin:0;overflow:hidden;background:#f7f7f5;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;overscroll-behavior:none";
+    const styles = document2.createElement("style");
+    styles.textContent = `
+      html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background: #f7f7f5;
+        -webkit-touch-callout: none;
+      }
+      body {
+        user-select: none;
+        -webkit-user-select: none;
+        overscroll-behavior: none;
+      }
+      .infinite-board-canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+        touch-action: none;
+        outline: none;
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+      }
+    `;
+    document2.head.appendChild(styles);
     const canvas = document2.createElement("canvas");
     canvas.className = "infinite-board-canvas";
     canvas.setAttribute("aria-label", "\u65E0\u9650\u753B\u5E03");
-    canvas.style.cssText = "display:block;width:100%;height:100%;touch-action:none;outline:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none";
     document2.body.appendChild(canvas);
     this.inputFrame = frame;
     return canvas;
@@ -4587,7 +4611,7 @@ var InfiniteBoardView = class extends import_obsidian3.FileView {
       iosInputMode: this.iosInputMode,
       inputDocument: this.inputFrame ? "isolated-child" : "host",
       runtimeMatchesManifest: runtimeMatchesManifest(this.plugin.manifest.version),
-      userAgent: navigator.userAgent,
+      platform: diagnosticPlatformSummary(),
       viewport: `${this.canvas.clientWidth}x${this.canvas.clientHeight}`,
       pixelRatio: Math.min(window.devicePixelRatio || 1, 3),
       visibility: document.visibilityState,
@@ -6395,3 +6419,9 @@ var InfiniteBoardView = class extends import_obsidian3.FileView {
     return Math.hypot(a.x - b.x, a.y - b.y);
   }
 };
+function diagnosticPlatformSummary() {
+  const mode = import_obsidian3.Platform.isDesktopApp ? "desktop-app" : import_obsidian3.Platform.isMobileApp ? "mobile-app" : import_obsidian3.Platform.isDesktop ? "desktop" : "mobile";
+  const os = import_obsidian3.Platform.isIosApp ? "ios" : import_obsidian3.Platform.isAndroidApp ? "android" : import_obsidian3.Platform.isMacOS ? "macos" : import_obsidian3.Platform.isWin ? "windows" : import_obsidian3.Platform.isLinux ? "linux" : "unknown";
+  const screen2 = import_obsidian3.Platform.isTablet ? "tablet" : import_obsidian3.Platform.isPhone ? "phone" : "screen";
+  return `${mode}/${os}/${screen2}${import_obsidian3.Platform.isSafari ? "/safari" : ""}`;
+}

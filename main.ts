@@ -795,7 +795,7 @@ class InfiniteBoardView extends FileView {
     }
     this.registerDomEvent(this.canvas, "contextmenu", (event) => {
       event.preventDefault();
-      if ((event as PointerEvent).pointerType === "pen") return;
+      if (event.pointerType === "pen") return;
       if (useSystemPasteTarget(Platform.isIosApp, Platform.isTablet)) {
         const press = this.canvasLongPress;
         if (press) {
@@ -1009,12 +1009,36 @@ class InfiniteBoardView extends FileView {
     });
     const document = frame.contentDocument;
     if (!document) throw new Error("iPad input document is unavailable");
-    document.documentElement.style.cssText = "width:100%;height:100%;margin:0;overflow:hidden;background:#f7f7f5;-webkit-touch-callout:none";
-    document.body.style.cssText = "width:100%;height:100%;margin:0;overflow:hidden;background:#f7f7f5;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;overscroll-behavior:none";
+    const styles = document.createElement("style");
+    styles.textContent = `
+      html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background: #f7f7f5;
+        -webkit-touch-callout: none;
+      }
+      body {
+        user-select: none;
+        -webkit-user-select: none;
+        overscroll-behavior: none;
+      }
+      .infinite-board-canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+        touch-action: none;
+        outline: none;
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+      }
+    `;
+    document.head.appendChild(styles);
     const canvas = document.createElement("canvas");
     canvas.className = "infinite-board-canvas";
     canvas.setAttribute("aria-label", "无限画布");
-    canvas.style.cssText = "display:block;width:100%;height:100%;touch-action:none;outline:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none";
     document.body.appendChild(canvas);
     this.inputFrame = frame;
     return canvas;
@@ -1718,7 +1742,7 @@ class InfiniteBoardView extends FileView {
       iosInputMode: this.iosInputMode,
       inputDocument: this.inputFrame ? "isolated-child" : "host",
       runtimeMatchesManifest: runtimeMatchesManifest(this.plugin.manifest.version),
-      userAgent: navigator.userAgent,
+      platform: diagnosticPlatformSummary(),
       viewport: `${this.canvas.clientWidth}x${this.canvas.clientHeight}`,
       pixelRatio: Math.min(window.devicePixelRatio || 1, 3),
       visibility: document.visibilityState,
@@ -3640,4 +3664,27 @@ class InfiniteBoardView extends FileView {
   private distance(a: ScreenPoint, b: ScreenPoint): number {
     return Math.hypot(a.x - b.x, a.y - b.y);
   }
+}
+
+function diagnosticPlatformSummary(): string {
+  const mode = Platform.isDesktopApp
+    ? "desktop-app"
+    : Platform.isMobileApp
+      ? "mobile-app"
+      : Platform.isDesktop
+        ? "desktop"
+        : "mobile";
+  const os = Platform.isIosApp
+    ? "ios"
+    : Platform.isAndroidApp
+      ? "android"
+      : Platform.isMacOS
+        ? "macos"
+        : Platform.isWin
+          ? "windows"
+          : Platform.isLinux
+            ? "linux"
+            : "unknown";
+  const screen = Platform.isTablet ? "tablet" : Platform.isPhone ? "phone" : "screen";
+  return `${mode}/${os}/${screen}${Platform.isSafari ? "/safari" : ""}`;
 }

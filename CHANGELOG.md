@@ -2,6 +2,13 @@
 
 Infinite Whiteboard（无限白板）在 0.4.82 首次以官方 Community 目录名称发布。此前版本沿用开发阶段名称 Infinite Board。
 
+## 0.4.83 官方审核修正
+
+- 修复官方自动审核报告的内联样式错误：iPad 隔离输入文档改用独立样式表，视觉和输入边界保持不变。
+- 输入诊断不再读取 `navigator.userAgent`，改用 Obsidian `Platform` API 记录运行环境。
+- 移除未使用的 `builtin-modules` 构建依赖，并补充审核要求的英文 README 安装与使用说明。
+- 不修改冻结的 Pencil 输入处理块、画板 schema、附件、同步或用户数据。
+
 ## 0.4.82 官方社区上架准备
 
 - 官方显示名调整为 **Infinite Whiteboard**，作者更新为 **贤思齐**；插件 ID 保持 `infinite-board`，避免影响已有安装、设置目录和 `.board` 文件。

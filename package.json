@@ -1,6 +1,6 @@
 {
   "name": "obsidian-infinite-board",
-  "version": "0.4.82",
+  "version": "0.4.83",
   "private": true,
   "description": "An Apple Pencil-first infinite whiteboard for Obsidian.",
   "main": "main.js",
@@ -23,7 +23,6 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^24.0.0",
-    "builtin-modules": "^5.0.0",
     "esbuild": "^0.25.0",
     "obsidian": "latest",
     "typescript": "^5.8.0"
