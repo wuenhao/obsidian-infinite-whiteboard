@@ -2033,8 +2033,8 @@ var InputFlightRecorder = class {
 };
 
 // src/platform/runtime-integrity.ts
-var RUNTIME_VERSION = "0.4.83";
-var BUILD_FINGERPRINT = "0.4.83-community-release-r1";
+var RUNTIME_VERSION = "0.4.84";
+var BUILD_FINGERPRINT = "0.4.84-community-release-r2";
 function runtimeMatchesManifest(manifestVersion) {
   return manifestVersion === RUNTIME_VERSION;
 }
@@ -3898,39 +3898,34 @@ var InfiniteBoardView = class extends import_obsidian3.FileView {
       cls: "infinite-board-input-frame",
       attr: { title: "\u65E0\u9650\u753B\u5E03\u8F93\u5165\u5C42", tabindex: "-1" }
     });
-    const document2 = frame.contentDocument;
-    if (!document2) throw new Error("iPad input document is unavailable");
-    const styles = document2.createElement("style");
-    styles.textContent = `
-      html, body {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        overflow: hidden;
-        background: #f7f7f5;
-        -webkit-touch-callout: none;
-      }
-      body {
-        user-select: none;
-        -webkit-user-select: none;
-        overscroll-behavior: none;
-      }
-      .infinite-board-canvas {
-        display: block;
-        width: 100%;
-        height: 100%;
-        touch-action: none;
-        outline: none;
-        user-select: none;
-        -webkit-user-select: none;
-        -webkit-touch-callout: none;
-      }
-    `;
-    document2.head.appendChild(styles);
-    const canvas = document2.createElement("canvas");
-    canvas.className = "infinite-board-canvas";
-    canvas.setAttribute("aria-label", "\u65E0\u9650\u753B\u5E03");
-    document2.body.appendChild(canvas);
+    const frameDocument = frame.contentDocument;
+    if (!frameDocument) throw new Error("iPad input document is unavailable");
+    const stylesheetPath = (0, import_obsidian3.normalizePath)(
+      `${this.app.vault.configDir}/plugins/${this.plugin.manifest.id}/styles.css`
+    );
+    const inputMarkup = new DOMParser().parseFromString(
+      [
+        "<!doctype html>",
+        '<html class="infinite-board-input-document">',
+        "<head>",
+        '<link rel="stylesheet" data-infinite-board-stylesheet>',
+        "</head>",
+        '<body class="infinite-board-input-body">',
+        '<canvas class="infinite-board-canvas" aria-label="\u65E0\u9650\u753B\u5E03"></canvas>',
+        "</body>",
+        "</html>"
+      ].join(""),
+      "text/html"
+    );
+    const stylesheet = inputMarkup.querySelector("link[data-infinite-board-stylesheet]");
+    if (!stylesheet) throw new Error("iPad input stylesheet template is unavailable");
+    stylesheet.href = this.app.vault.adapter.getResourcePath(stylesheetPath);
+    frameDocument.replaceChild(
+      frameDocument.adoptNode(inputMarkup.documentElement),
+      frameDocument.documentElement
+    );
+    const canvas = frameDocument.querySelector("canvas.infinite-board-canvas");
+    if (!canvas) throw new Error("iPad input canvas is unavailable");
     this.inputFrame = frame;
     return canvas;
   }
@@ -4219,7 +4214,9 @@ var InfiniteBoardView = class extends import_obsidian3.FileView {
     proxy.setAttribute("inputmode", "none");
     const left = Math.max(0, Math.min(this.canvas.clientWidth - 44, clientX - 22));
     const top = Math.max(0, Math.min(this.canvas.clientHeight - 44, clientY - 22));
-    proxy.style.cssText = `position:fixed;left:${left}px;top:${top}px;width:44px;height:44px;overflow:hidden;opacity:0.01;pointer-events:none;user-select:text;-webkit-user-select:text;-webkit-touch-callout:default;caret-color:transparent`;
+    proxy.className = "infinite-board-paste-proxy";
+    proxy.style.setProperty("--infinite-board-paste-left", `${left}px`);
+    proxy.style.setProperty("--infinite-board-paste-top", `${top}px`);
     document2.body.appendChild(proxy);
     this.canvasPasteProxy = proxy;
     let pasteReceived = false;

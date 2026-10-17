@@ -7,7 +7,7 @@
 - 官方显示名：`Infinite Whiteboard`
 - Manifest 作者：`贤思齐`
 - 稳定插件 ID：`infinite-board`
-- 发布版本：`0.4.83`
+- 发布版本：`0.4.84`
 - MIT 许可证
 - 面向用户的 README、功能说明和界面预览
 - GitHub Release 自动构建工作流
@@ -28,8 +28,8 @@
 4. 推送与 Manifest 完全一致的版本标签：
 
    ```bash
-   git tag -a 0.4.83 -m "0.4.83"
-   git push origin 0.4.83
+   git tag -a 0.4.84 -m "0.4.84"
+   git push origin 0.4.84
    ```
 
 5. 等待 `Release Obsidian plugin` 工作流完成，检查 Draft Release 中包含：

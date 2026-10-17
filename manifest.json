@@ -1,7 +1,7 @@
 {
   "id": "infinite-board",
   "name": "Infinite Whiteboard",
-  "version": "0.4.83",
+  "version": "0.4.84",
   "minAppVersion": "1.5.0",
   "description": "Create infinite whiteboards and annotate screenshots with Apple Pencil.",
   "author": "贤思齐",

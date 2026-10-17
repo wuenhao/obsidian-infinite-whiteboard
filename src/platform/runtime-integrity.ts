@@ -1,5 +1,5 @@
-export const RUNTIME_VERSION = "0.4.83";
-export const BUILD_FINGERPRINT = "0.4.83-community-release-r1";
+export const RUNTIME_VERSION = "0.4.84";
+export const BUILD_FINGERPRINT = "0.4.84-community-release-r2";
 
 export function runtimeMatchesManifest(manifestVersion: string): boolean {
   return manifestVersion === RUNTIME_VERSION;

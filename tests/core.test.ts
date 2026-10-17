@@ -633,9 +633,9 @@ test("diagnostic counter snapshots are stable, integral and non-negative", () =>
 });
 
 test("runtime identity detects a partially synced plugin release", () => {
-  assert.equal(RUNTIME_VERSION, "0.4.83");
+  assert.equal(RUNTIME_VERSION, "0.4.84");
   assert.equal(BUILD_FINGERPRINT.includes(RUNTIME_VERSION), true);
-  assert.equal(runtimeMatchesManifest("0.4.83"), true);
+  assert.equal(runtimeMatchesManifest("0.4.84"), true);
   assert.equal(runtimeMatchesManifest("0.4.37"), false);
 });
 
