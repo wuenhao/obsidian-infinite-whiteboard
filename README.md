@@ -13,8 +13,6 @@
 
 Infinite Whiteboard is a cross-platform infinite canvas plugin for **iPad, Mac, Windows, iPhone, and Android**. Sketch with Apple Pencil or touch on iPad, organize screenshots and references on desktop, and continue on your phone whenever inspiration strikes.
 
-![Infinite Whiteboard 界面设计预览](./docs/screenshots/community-preview.png)
-
 ## Features
 
 - Infinite canvas with pan, zoom, and fit-to-content controls.
