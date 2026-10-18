@@ -1,10 +1,19 @@
 # 无限白板 · Infinite Whiteboard
 
-Create near-limitless whiteboards in Obsidian, collect screenshots and photos, and write handwritten annotations with Apple Pencil on the same canvas.
+**一张画板，所有设备继续。**
+
+无限白板是一款支持 **iPad、Mac、Windows、iPhone（iOS）和 Android** 的跨平台无限画布插件。在 iPad 上手写批注，在 Mac 或 Windows 上整理截图与资料，在 iPhone 或 Android 上随时查看并继续编辑；通过你已有的 Obsidian 同步方式，在不同设备间打开同一个 `.board` 文件。
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/wuenhao/obsidian-infinite-whiteboard/HEAD/docs/screenshots/ipad-multiplatform.png" alt="无限白板在 iPad 上使用" width="72%">
+  <img src="https://raw.githubusercontent.com/wuenhao/obsidian-infinite-whiteboard/HEAD/docs/screenshots/mobile-multiplatform.jpg" alt="无限白板在手机上使用" width="23%">
+</p>
+
+**多端支持：iPadOS · macOS · Windows · iOS · Android**
+
+Infinite Whiteboard is a cross-platform infinite canvas plugin for **iPad, Mac, Windows, iPhone, and Android**. Sketch with Apple Pencil or touch on iPad, organize screenshots and references on desktop, and continue on your phone whenever inspiration strikes.
 
 ![Infinite Whiteboard 界面设计预览](./docs/screenshots/community-preview.png)
-
-Infinite Whiteboard is a cross-platform infinite canvas plugin for desktop, iPad, iPhone, and Android. It is designed for collecting course screenshots, meeting notes, visual references, and handwritten ideas in one place.
 
 ## Features
 
@@ -34,6 +43,7 @@ Infinite Whiteboard is a cross-platform infinite canvas plugin for desktop, iPad
 ## Compatibility and data
 
 - Minimum Obsidian version: `1.5.0`.
+- Supported platforms: iPadOS, macOS, Windows, iOS, and Android.
 - `.board` files currently use schema v5 with continuous migration from older formats.
 - Images use vault-relative paths and are stored in an `.assets` folder beside the board.
 - The plugin sends no network requests and collects no telemetry.
